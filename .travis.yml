@@ -36,7 +36,7 @@ after_script:
   - pwd
   - ls -al
   - find ~ | grep coverage
-  - mv cloudassets/coverage.clover ~/build/$TRAVIS_REPO_SLUG/coverage.xml
+  - cp cloudassets/coverage.xml ~/build/$TRAVIS_REPO_SLUG/coverage.xml
   - cd ~/build/$TRAVIS_REPO_SLUG
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
