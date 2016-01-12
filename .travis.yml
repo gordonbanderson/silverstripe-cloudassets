@@ -33,6 +33,9 @@ before_script:
 script: ./cloudassets/tests/travis/run_build.sh
 
 after_script:
+  - pwd
+  - ls -al
+  - find ~ | grep coverage
   - mv cloudassets/coverage.clover ~/build/$TRAVIS_REPO_SLUG/coverage.xml
   - cd ~/build/$TRAVIS_REPO_SLUG
   - wget https://scrutinizer-ci.com/ocular.phar
