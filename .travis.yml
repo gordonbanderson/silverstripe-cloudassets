@@ -20,6 +20,9 @@ matrix:
     - env: DB=MYSQL CORE_RELEASE=3.2
     - env: DB=MYSQL CORE_RELEASE=master
 
+before_install:
+  - pip install --user codecov
+
 before_script:
  - pear -q install --onlyreqdeps pear/PHP_CodeSniffer
  - phpenv rehash
@@ -29,4 +32,9 @@ before_script:
 
 script: ./cloudassets/tests/travis/run_build.sh
 
-after_script: ./cloudassets/test/travis/upload_coverage.sh
+after_script:
+  - mv cloudassets/coverage.clover ~/build/$TRAVIS_REPO_SLUG/coverage.xml
+  - cd ~/build/$TRAVIS_REPO_SLUG
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - codecov
